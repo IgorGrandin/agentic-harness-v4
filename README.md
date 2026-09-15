@@ -1,4 +1,4 @@
-# Agentic Harness V4
+# Agentic Harness V4 (`agentic-harness-v4`)
 
 V4 is a parallel, minimal distribution. One native-agent kernel serves ordinary
 tasks and `/execute`; `/execute` is a constraints overlay, not a workflow
