@@ -35,7 +35,9 @@ Global destinations are `~/.codex/AGENTS.md` plus `~/.codex/agents/`,
 `~/.gemini/GEMINI.md` plus `~/.gemini/config/skills/`, and
 `~/.claude/CLAUDE.md` plus `~/.claude/skills/`. Codex and Cursor receive native
 role projections; Antigravity and Claude Code receive global instructions and
-the three shared skills. MCP, credentials, models, and project-local rules
+the three shared skills. Other profile declarations may remain as source/platform
+declarations, but they are not materialized into the Codex Coder runtime unless
+that adapter explicitly composes them. MCP, credentials, models, and project-local rules
 remain provider-managed. Existing managed instruction files are backed up
 under each provider's `portable-backups/<timestamp>/` directory.
 
