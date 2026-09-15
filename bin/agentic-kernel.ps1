@@ -21,7 +21,8 @@ try {
     $worker = if ($null -eq $failure) { [string]$request.workerId } else { [string]$failure.workerId }
     if (-not $worker) { $worker = 'worker-1' }
     $replacement = if ($null -eq $failure) { $null } else { [ordered]@{ role=$role; workerId=($worker + '-replacement'); reason=[string]$failure.reason; contextSources=$sources; budgets=[ordered]@{contextTokens=$contextBudget;outputTokens=$outputBudget} } }
-    [ordered]@{ status=$status; kernel='v4-single'; root='host-selected'; role=$role; workerId=$worker; constraintsOverlay=([bool]$request.constraintsOverlay); contextSources=$sources; budgets=[ordered]@{contextTokens=$contextBudget;outputTokens=$outputBudget}; replacement=$replacement } | ConvertTo-Json -Compress -Depth 16
+    $overlay = if ($request.PSObject.Properties['constraintsOverlay']) { [bool]$request.constraintsOverlay } else { $false }
+    [ordered]@{ status=$status; kernel='v4-single'; root='host-selected'; role=$role; workerId=$worker; constraintsOverlay=$overlay; contextSources=$sources; budgets=[ordered]@{contextTokens=$contextBudget;outputTokens=$outputBudget}; replacement=$replacement } | ConvertTo-Json -Compress -Depth 16
     exit 0
 } catch {
     [ordered]@{ status='INVALID_KERNEL_REQUEST'; error=$_.Exception.Message } | ConvertTo-Json -Compress

@@ -6,5 +6,6 @@
   "agentFiles": ["scout.toml", "implementer.toml", "verifier.toml", "reviewer.toml", "architect-escalation.toml"],
   "skills": ["sdd-workflow", "systematic-debugging", "repo-aware-architecture"],
   "adapters": ["codex", "cursor", "antigravity", "claude"],
-  "harnessInstall": { "directories": ["core", "global", "profiles", "adapters", "skills", "config", "bin"], "files": ["portable-manifest.json"] }
+  "harnessInstall": { "directories": ["core", "global", "profiles", "adapters", "skills", "config", "bin"], "files": ["portable-manifest.json"] },
+  "waitPolicy": "config/wait-policy.json"
 }

@@ -1,6 +1,16 @@
-[CmdletBinding()] param([ValidateSet('resolve','start','resume','inspect')][string]$Action='resolve',[string]$ProjectRoot=(Get-Location).Path,[string]$WorkflowPath='',[string]$RunId='',[string]$RuntimeRoot=(Join-Path ([IO.Path]::GetTempPath()) 'agentic-harness-v4'))
-Set-StrictMode -Version Latest; $ErrorActionPreference='Stop'; $project=[IO.Path]::GetFullPath($ProjectRoot); if(-not(Test-Path $project -PathType Container)){throw "ProjectRoot not found: $project"}; if(-not $RunId){$RunId=[Guid]::NewGuid().ToString('N')}; if($RunId -notmatch '^[A-Za-z0-9._-]+$'){throw 'Unsafe RunId'}
-$workflow=''; if($WorkflowPath){$workflow=[IO.Path]::GetFullPath((Join-Path $project $WorkflowPath));$prefix=$project.TrimEnd('\','/')+[IO.Path]::DirectorySeparatorChar;if(-not $workflow.StartsWith($prefix,[StringComparison]::OrdinalIgnoreCase)){throw 'WorkflowPath escapes ProjectRoot'}}
-if($Action -eq 'resolve'){[ordered]@{status='RESOLVED';kernel='v4-single';mode=if($workflow){'NATIVE'}else{'DIRECT'};constraintsOverlay=$true;hostRoot='selected-by-host';projectRoot=$project;workflowPath=$workflow;runId=$RunId}|ConvertTo-Json -Compress;exit 0}
-if($Action -eq 'inspect'){[ordered]@{status='NOT_FOUND';kernel='v4-single';runId=$RunId;runtimeRoot=[IO.Path]::GetFullPath($RuntimeRoot)}|ConvertTo-Json -Compress;exit 0}
-if(-not $workflow){throw 'V4 execute requires an explicit WorkflowPath for start/resume'}; if(-not(Test-Path $workflow -PathType Leaf)){throw "Workflow not found: $workflow"}; [ordered]@{status=if($Action -eq 'start'){'READY'}else{'RESUMED'};kernel='v4-single';constraintsOverlay=$true;workflowPath=$workflow;runId=$RunId;message='Native host workers execute semantic phases; deterministic guards enforce safety and blocking waits.'}|ConvertTo-Json -Compress
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory=$true)][string]$SourcePath,
+    [string]$ProjectRoot=(Get-Location).Path,
+    [string[]]$RequiredGuarantees=@(),
+    [switch]$AsJson
+)
+Set-StrictMode -Version Latest; $ErrorActionPreference='Stop'
+$project=[IO.Path]::GetFullPath($ProjectRoot)
+if(-not(Test-Path -LiteralPath $project -PathType Container)){throw "ProjectRoot not found: $project"}
+$source=[IO.Path]::GetFullPath((Join-Path $project $SourcePath))
+$prefix=$project.TrimEnd('\','/')+[IO.Path]::DirectorySeparatorChar
+if(-not $source.StartsWith($prefix,[StringComparison]::OrdinalIgnoreCase)){throw 'SourcePath escapes ProjectRoot'}
+if(-not(Test-Path -LiteralPath $source -PathType Leaf)){throw "Execute source not found: $source"}
+$overlay=[ordered]@{schemaVersion=1;kind='constraints-overlay';active=$true;sourcePath=$source;projectRoot=$project;requiredGuarantees=@($RequiredGuarantees);root='host-selected';kernel='v4-single';authorizationBoundaries=@('source is authoritative','same base harness','no automatic commit')}
+if($AsJson){$overlay|ConvertTo-Json -Compress}else{$overlay}

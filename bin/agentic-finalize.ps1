@@ -28,9 +28,7 @@ if ($GateReceiptPath) {
     if ($gateReceipt.status -ne 'GREEN') { throw 'FINALIZATION_BLOCKED: gate receipt is not GREEN.' }
 }
 if ($RunId) {
-    $receiptTool = Join-Path $PSScriptRoot 'workflow-receipts.ps1'
-    & (Get-Process -Id $PID).Path -NoProfile -File $receiptTool -Action finalization-guard -ProjectRoot $repositoryRoot -RunId $RunId -RuntimeRoot $RuntimeRoot | Out-Null
-    if ($LASTEXITCODE -ne 0) { throw 'FINALIZATION_BLOCKED: current tree is not covered by the gate receipt.' }
+    throw 'FINALIZATION_BLOCKED: legacy run identifiers are unsupported; provide an explicit GREEN GateReceiptPath.'
 }
 
 $capture = $manifest.capture
