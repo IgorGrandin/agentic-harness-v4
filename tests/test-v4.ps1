@@ -1,0 +1,9 @@
+[CmdletBinding()] param()
+Set-StrictMode -Version Latest; $ErrorActionPreference='Stop'; $root=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
+& (Join-Path $root 'scripts/verify.ps1') | Out-Null
+$skills=@('sdd-workflow','systematic-debugging','repo-aware-architecture'); foreach($skill in $skills){$p=Join-Path $root "skills/$skill/SKILL.md";if(-not(Test-Path $p)){throw "Specialist skill missing: $skill"}}; $arch=Get-Content -Raw (Join-Path $root 'skills/repo-aware-architecture/SKILL.md'); if($arch -notmatch 'return.*ambigu' -or $arch -notmatch 'single-kernel'){throw 'V4 ambiguity handoff contract missing'}
+$manifest=Get-Content -Raw (Join-Path $root 'portable-manifest.json')|ConvertFrom-Json; if(@($manifest.adapters) -notcontains 'claude'){throw 'Four-adapter manifest contract failed'}
+$request=Join-Path ([IO.Path]::GetTempPath()) 'v4-kernel-test.json'; [IO.File]::WriteAllText($request,'{"schemaVersion":1,"kind":"kernel-request","role":"scout","workerId":"w1","constraintsOverlay":true,"contextSources":["README.md"],"budgets":{"contextTokens":512,"outputTokens":128}}')
+$out=& (Join-Path $root 'bin/agentic-kernel.ps1') -RequestPath $request | ConvertFrom-Json; if($out.status -ne 'READY' -or $out.kernel -ne 'v4-single'){throw 'Kernel READY contract failed'}
+$replacement=Join-Path ([IO.Path]::GetTempPath()) 'v4-kernel-replacement.json'; [IO.File]::WriteAllText($replacement,'{"schemaVersion":1,"kind":"kernel-request","role":"implementer","constraintsOverlay":true,"failure":{"workerId":"w2","reason":"failed"},"contextSources":["README.md"],"budgets":{"contextTokens":512,"outputTokens":128}}'); $r=& (Join-Path $root 'bin/agentic-kernel.ps1') -RequestPath $replacement | ConvertFrom-Json; if($r.status -ne 'REPLACEMENT_REQUIRED'){throw 'Replacement contract failed'}
+Write-Host 'V4 kernel and installation tests passed.'
