@@ -10,6 +10,19 @@ escalation is Sol Low and decision-only; Sol never edits, runs gates, waits, or
 owns mechanical correction. Workers use the five role files in global/agents/;
 project AGENTS.md takes precedence.
 
+### Resolved instruction references
+
+- Parent resolves deterministic instruction/skill references before spawn;
+  packets carry paths, so workers do not rediscover them.
+- Global Harness policy is inherited from the Codex runtime. If inheritance is
+  unavailable, pass the exact `~/.codex/AGENTS.md` path; never search for it.
+- Project `AGENTS.md` and applicable rules remain distinct project constraints
+  and are passed by resolved path.
+- Shared skills use the canonical `~/.agents/skills/<skill-name>/SKILL.md` path;
+  pass it directly and do not probe the repository for same-named copies.
+- Use project-local skills or overlays only when explicitly resolved as local,
+  passing their exact path.
+
 The root is a control plane except for a true microtask. Delegated mechanical
 work remains delegated: if a worker fails, times out, reaches a usage limit, or
 cannot finish, the host creates one equivalent replacement worker with a bounded
