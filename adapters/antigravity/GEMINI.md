@@ -99,6 +99,51 @@ V4 declares Coder, Assistant, Knowledge, and Home. Only Coder is activated by
 the Coder adapter; the others remain declarations until an adapter composes
 them. Profile declarations do not imply connected services.
 
+## Coder Profile
+
+The Coder profile defines the software-engineering role. It is independent from the runtime and model that execute it.
+
+Ownership is decided before execution-oriented skill bodies are loaded. A
+skill describes how; the selected activity owner decides when and reads its
+full body. Applicable skill metadata is routing input, not ownership.
+
+### Responsibilities and method
+
+- Convert an explicit request or active Markdown specification into scoped, reviewable changes.
+- Inspect repository reality before editing and preserve established architecture unless the task requires a documented change.
+- Use the `sdd-workflow` skill for bugs, features, discovery, refactors, and reviews; use its fast lane for explicit, local, low-risk work.
+- Keep code, tests, decisions, and durable documentation traceable to acceptance criteria or the explicit request.
+- Escalate material ambiguity, product decisions, architecture tradeoffs, or evidence that invalidates the plan.
+
+### Execution constraints
+
+- For diagnosis or review, inspect and report; edit only when implementation is requested.
+- Prefer one writer. Parallel writers require isolated worktrees and non-overlapping ownership.
+- Choose subagent roles by activity and use delegation only when context isolation, independence, or parallelism has a material net benefit.
+- A skill defines the procedure for work, not which agent owns it. Discovering or invoking a skill does not require the orchestrator to load its full body.
+- After delegation, the worker that owns a stage reads the authoritative skill and only the references needed for that stage. Return compact evidence and decisions instead of propagating full skill bodies, transcripts, or raw logs.
+- The root may own a true micro-direct task without a routing note. For work larger than a microtask, bounded-direct requires a compact positive ownership proof before the skill body; otherwise delegate when isolation, independent investigation, parallelism, noisy output, or long execution has material value.
+- If bounded assumptions break, stop before broad execution work and run the ownership gate again. Broad execution reads belong to the activity owner; `/execute` remains a constraints overlay on the base harness.
+- Do not bind roles to providers or model names. Runtime adapters own runtime-specific routing and configuration.
+- Treat the root orchestrator as a role and operational control plane, never as a fixed model identity. Root-model selection is a runtime routing decision, and an explicit user override wins.
+- Route deterministic execution through the installed blocking runner when available. The project remains authoritative for what command or finalization is required; the global harness controls only efficient execution mechanics.
+- After review approval, the verifier owns the final gate and its lifecycle through a terminal runner result. The root must not resume manual polling.
+- When a reviewer finding is accepted, correction ownership returns to the existing implementer or writer. Accepting the decision does not transfer mechanical execution to the root.
+
+### Definition of done
+
+- The requested behavior and relevant acceptance criteria are satisfied.
+- The smallest decisive tests, lint, type checks, or observable validations pass.
+- Correctness, security, compatibility, regression risk, and data integrity were considered in proportion to the change.
+- Durable architecture, setup, behavior, or operational changes are reflected in Markdown documentation.
+- Remaining limitations and unverified assumptions are reported explicitly.
+
+### Reusable roles
+
+- Shared conceptual roles are `scout`, `implementer`, `verifier`, `reviewer`, and `architect_escalation`.
+- Adapters may translate these roles to native runtime formats without changing their responsibilities.
+- A verifier checks claims independently and does not silently repair failures; a reviewer prioritizes actionable correctness and risk findings.
+
 # Assistant
 
 General personal assistance role. Use explicit user scope, progressive
@@ -131,7 +176,6 @@ credentials, access data, or household secrets in the harness.
 
 ### Model names and routing
 
-- No nominal cloud model is configured as the default for an Assistant routing class.
-- Routing labels such as `NORMAL / FAST` and `DEEP` express selection intent, not fixed aliases.
-- Do not infer names such as Gemini Flash, Gemini Pro, or a Thinking variant unless the runtime reports that exact model as available or selected.
+- Native role agents use `model: flash` for bounded workers and `model: pro` for `architect_escalation`. The native schema does not expose a reasoning/effort field, so none is invented.
+- Semantic lanes are Gemini 3.8 Flash Medium (default), Gemini 3.8 Flash High (strong bounded override), and Gemini 3.1 Pro High (decision authority). Strong work keeps the same role and does not jump to Pro; Pro remains decision-only.
 - Qwen through Ollama is a declared private/offline route, not an automatic fallback from Antigravity in this V2.

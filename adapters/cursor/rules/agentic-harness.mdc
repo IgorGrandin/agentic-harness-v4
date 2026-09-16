@@ -148,6 +148,7 @@ full body. Applicable skill metadata is routing input, not ownership.
 
 - Use `~/.cursor/memory-bank/INDEX.md` as the global memory index.
 - Discover shared skills from `~/.agents/skills/` and Cursor role projections from `~/.cursor/agents/`.
+- Cursor recommends Auto for the root, but host/user choice always wins. Native subagents use `model: inherit` and provider-managed reasoning/effort; this adapter never pins a provider model or fixed effort tier.
 - Treat repository `AGENTS.md` and `.cursor/rules/*.mdc` as project-specific layers with higher specificity.
 - When a repository contains `.agentic-harness/executor.json`, treat it as the documented default for new Coder tasks; an explicit user choice of runtime takes precedence.
 - Keep MCP credentials and server activation in user- or project-managed `mcp.json`; the harness only declares capabilities.

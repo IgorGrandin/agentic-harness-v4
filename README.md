@@ -33,12 +33,14 @@ untouched until the user explicitly authorizes replacement.
 Global destinations are `~/.codex/AGENTS.md` plus `~/.codex/agents/`,
 `~/.cursor/rules/agentic-harness.mdc` plus `~/.cursor/agents/`,
 `~/.gemini/GEMINI.md` plus `~/.gemini/config/skills/`, and
-`~/.claude/CLAUDE.md` plus `~/.claude/skills/`. Codex and Cursor receive native
-role projections; Antigravity and Claude Code receive global instructions and
-the three shared skills. Other profile declarations may remain as source/platform
-declarations, but they are not materialized into the Codex Coder runtime unless
-that adapter explicitly composes them. MCP, credentials, models, and project-local rules
-remain provider-managed. Existing managed instruction files are backed up
+`~/.claude/CLAUDE.md` plus `~/.claude/skills/`. All four adapters receive the
+five canonical native role projections. Codex maps Luna Medium -> Terra
+Medium-first -> Sol Low-first decision authority; Claude maps Haiku
+medium-equivalent -> Sonnet Medium-first -> Opus Low-first decision authority;
+Antigravity maps Flash Medium -> Flash High -> Pro High. Cursor recommends Auto
+for the root and uses inherited model and provider-managed reasoning for
+subagents. MCP, credentials, model catalogs, and project-local rules remain
+provider-managed. Existing managed instruction files are backed up
 under each provider's `portable-backups/<timestamp>/` directory.
 
 ## Baseline and decision log

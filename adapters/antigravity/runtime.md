@@ -15,7 +15,6 @@
 
 ### Model names and routing
 
-- No nominal cloud model is configured as the default for an Assistant routing class.
-- Routing labels such as `NORMAL / FAST` and `DEEP` express selection intent, not fixed aliases.
-- Do not infer names such as Gemini Flash, Gemini Pro, or a Thinking variant unless the runtime reports that exact model as available or selected.
+- Native role agents use `model: flash` for bounded workers and `model: pro` for `architect_escalation`. The native schema does not expose a reasoning/effort field, so none is invented.
+- Semantic lanes are Gemini 3.8 Flash Medium (default), Gemini 3.8 Flash High (strong bounded override), and Gemini 3.1 Pro High (decision authority). Strong work keeps the same role and does not jump to Pro; Pro remains decision-only.
 - Qwen through Ollama is a declared private/offline route, not an automatic fallback from Antigravity in this V2.
