@@ -19,6 +19,34 @@ single-small-edit microtask whose focused verification costs less than a
 handoff. Execution-oriented skill bodies and broad implementation context stay
 with workers; the root consumes bounded capsules and completion packets.
 
+### Ownership gate
+
+Use skill metadata/index only to classify activity. Choose ownership before
+opening any execution-oriented `SKILL.md`, broad repository search, many
+rules, large logs, or test/debug cycles. The owner then loads the procedure:
+`skill applies -> choose owner -> owner loads skill -> execute`.
+
+- **micro-direct:** explicit local reversible small edit plus focused check;
+  no routing note is required.
+- **bounded-direct:** root may retain one coherent, moderate surface when
+  context/tool cycles are bounded and delegation offers no material
+  independence, isolation, parallelism, noisy-output, or long-run benefit.
+  Before the full skill body, emit: `Routing: bounded-direct; owner: root;
+  reason: <positive bounded evidence>; expected surface: <scope>; delegate
+  if: <assumptions that would break>`. This is transient, not a receipt.
+- **delegated:** send a self-contained packet; the worker owns skill loading
+  and returns a bounded capsule/completion packet. The root does not load the
+  body merely for awareness.
+- **decision-escalation:** Sol Low is decision-only for material architecture,
+  security, permissions, data, migration, contract, or contradictory-evidence
+  decisions; it never edits, tests, waits, or corrects mechanically.
+
+Before a broad read ask whether it primarily serves routing or execution. A
+primarily execution-oriented broad read belongs to the activity owner and is a
+delegation trigger. Reclassify before more broad work if a second independent
+surface, cross-cutting scope, repeated debug cycles, significant output,
+long-running process, independent review, or increased risk/ambiguity appears.
+
 When an accepted reviewer finding requires correction, the same implementer (or
 an equivalent replacement implementer) owns the correction and proportional
 re-review. The root decides whether to accept the finding but does not become

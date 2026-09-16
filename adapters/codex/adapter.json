@@ -1,1 +1,1 @@
-{"schemaVersion":1,"id":"codex","installMode":"always","instructionOutput":"global/AGENTS.md","instructionSources":["adapters/codex/header.md","adapters/codex/runtime.md","profiles/coder/PROFILE.md"]}
+{"schemaVersion":1,"id":"codex","installMode":"always","instructionOutput":"global/AGENTS.md","instructionSources":["adapters/codex/header.md","adapters/codex/runtime.md","config/skill-index.md"]}

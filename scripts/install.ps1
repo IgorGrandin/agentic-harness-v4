@@ -12,6 +12,7 @@ $cursorAgents=Join-Path $CursorHome 'agents';foreach($role in $m.agentFiles){$ra
 $gemA=Get-AdapterManifest $root 'Antigravity';Install-ManagedContent (Get-AdapterInstructionContent $root $gemA) (Join-Path $GeminiHome 'GEMINI.md') $GeminiHome 'GEMINI.md'
 $claudeA=Get-AdapterManifest $root 'Claude';Install-ManagedContent (Get-AdapterInstructionContent $root $claudeA) (Join-Path $ClaudeHome 'CLAUDE.md') $ClaudeHome 'CLAUDE.md'
 foreach($skill in $m.skills){Install-ManagedDirectory (Join-Path $root "skills\$skill") (Join-Path $AgentsHome "skills\$skill") $AgentsHome "skills\$skill";Install-ManagedDirectory (Join-Path $root "skills\$skill") (Join-Path $GeminiHome "config\skills\$skill") $GeminiHome "config\skills\$skill";Install-ManagedDirectory (Join-Path $root "skills\$skill") (Join-Path $ClaudeHome "skills\$skill") $ClaudeHome "skills\$skill"}
+Install-ManagedContent (Get-Content -Raw (Join-Path $root 'config\skill-index.md')) (Join-Path $AgentsHome 'skill-index.md') $AgentsHome 'skill-index.md'
 foreach($role in $m.agentFiles){$src=Join-Path $root "global\agents\$role";Install-ManagedContent (Get-Content -Raw $src) (Join-Path $CodexHome "agents\$role") $CodexHome "agents\$role"}
 if(-not $SkipConfig){
     $configPath=Join-Path $CodexHome 'config.toml'; $fragment=Get-Content -Raw (Join-Path $root 'config\agents.toml')

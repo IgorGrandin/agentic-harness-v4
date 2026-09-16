@@ -103,6 +103,10 @@ them. Profile declarations do not imply connected services.
 
 The Coder profile defines the software-engineering role. It is independent from the runtime and model that execute it.
 
+Ownership is decided before execution-oriented skill bodies are loaded. A
+skill describes how; the selected activity owner decides when and reads its
+full body. Applicable skill metadata is routing input, not ownership.
+
 ### Responsibilities and method
 
 - Convert an explicit request or active Markdown specification into scoped, reviewable changes.
@@ -118,6 +122,8 @@ The Coder profile defines the software-engineering role. It is independent from 
 - Choose subagent roles by activity and use delegation only when context isolation, independence, or parallelism has a material net benefit.
 - A skill defines the procedure for work, not which agent owns it. Discovering or invoking a skill does not require the orchestrator to load its full body.
 - After delegation, the worker that owns a stage reads the authoritative skill and only the references needed for that stage. Return compact evidence and decisions instead of propagating full skill bodies, transcripts, or raw logs.
+- The root may own a true micro-direct task without a routing note. For work larger than a microtask, bounded-direct requires a compact positive ownership proof before the skill body; otherwise delegate when isolation, independent investigation, parallelism, noisy output, or long execution has material value.
+- If bounded assumptions break, stop before broad execution work and run the ownership gate again. Broad execution reads belong to the activity owner; `/execute` remains a constraints overlay on the base harness.
 - Do not bind roles to providers or model names. Runtime adapters own runtime-specific routing and configuration.
 - Treat the root orchestrator as a role and operational control plane, never as a fixed model identity. Root-model selection is a runtime routing decision, and an explicit user override wins.
 - Route deterministic execution through the installed blocking runner when available. The project remains authoritative for what command or finalization is required; the global harness controls only efficient execution mechanics.
