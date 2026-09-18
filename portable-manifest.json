@@ -4,7 +4,7 @@
   "purpose": "One native-agent kernel with an optional /execute constraints overlay.",
   "corePolicyFiles": ["context-memory.md", "kernel.md", "deterministic-execution.md", "session-lifecycle.md", "evidence.md", "security-permissions.md"],
   "agentFiles": ["scout.toml", "implementer.toml", "verifier.toml", "reviewer.toml", "architect-escalation.toml"],
-  "skills": ["sdd-workflow", "systematic-debugging", "repo-aware-architecture"],
+  "skills": ["sdd-workflow", "systematic-debugging", "repo-aware-architecture", "revise-and-deploy"],
   "adapters": ["codex", "cursor", "antigravity", "claude"],
   "harnessInstall": { "directories": ["core", "global", "profiles", "adapters", "skills", "config", "bin"], "files": ["portable-manifest.json"] },
   "waitPolicy": "config/wait-policy.json"

@@ -15,7 +15,7 @@ they may not assume consequential answers. The root answers or invokes Sol Low
 
 The manifest is the source of truth. Five roles are retained (scout,
 implementer, verifier, reviewer, architect-escalation); `sdd-workflow`,
-`systematic-debugging`, and `repo-aware-architecture` are worker-loaded skills
+`systematic-debugging`, `repo-aware-architecture`, and `revise-and-deploy` are worker-loaded skills
 available on demand. Codex, Cursor, Antigravity, and Claude Code
 projections are included. No LangGraph, compiler, graph/runtime, workflow
 receipts, obsolete registries, Ollama models, unrelated profiles/memory, or
@@ -48,7 +48,7 @@ under each provider's `portable-backups/<timestamp>/` directory.
 V4 was derived from the current agentic-harness manifest/install/materialize/
 verify contract. KEEP: portable manifest, adapter projections, materialization,
 blocking runner, finalization guard, kernel, roles, and installation checks.
-SIMPLIFY: one manifest, four adapters, three worker-loaded skills, and a small
+SIMPLIFY: one manifest, four adapters, four worker-loaded skills, and a small
 execute resolver.
 REMOVE: legacy workflow compiler/validator/registry/resolver/receipts, graph
 runtime, obsolete capability/profile registries, unrelated profiles/memory,

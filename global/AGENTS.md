@@ -80,3 +80,4 @@ skill body after the ownership gate.
 - `sdd-workflow` — repository-grounded bugs, features, discovery, refactors, and reviews.
 - `systematic-debugging` — diagnosis of failures and unexpected behavior.
 - `repo-aware-architecture` — repository-grounded architecture analysis.
+- `revise-and-deploy` — audit a completed execution, validate its PR, and deploy to Dev2 only when explicitly requested.
