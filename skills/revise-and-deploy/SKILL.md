@@ -10,6 +10,7 @@ Continue from a completed `/execute` result. Dev2 is the fixed deployment target
 ## 1. Audit
 
 - Locate the execution report and gate manifest. If either is missing, stop and report what is needed.
+- For BrixBroker gate artifacts, use the project-defined root `%TEMP%/claude-handoffs/Broker/`; each gate is inside its own gate-specific subfolder. Resolve the correct subfolder from the project instructions or execution manifest before reading or comparing a gate. Do not read a similarly named gate directly from `%TEMP%` or another temporary location, and do not block execution because such an unrelated file has a different header/fingerprint. If the gate cannot be found under its expected subfolder, report that expected path as missing rather than substituting another temp file.
 - Resolve the exact Azure Boards card/WI ID from the execution report and current branch context. If the identity is missing or ambiguous, ask the root/user before opening a PR; never guess or associate a similar-looking card.
 - Audit the commit against the WI/plan and `.cursor/commands/execute-code-review.md`; apply the relevant rules from `.cursor/rules/005`, `060`, and `110`.
 - Verify branch, tested tree fingerprint, committed paths, and gate coverage. Re-run only when required by the rules or when the tested tree cannot be tied to the commit.
