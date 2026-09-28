@@ -34,8 +34,9 @@ Global destinations are `~/.codex/AGENTS.md` plus `~/.codex/agents/`,
 `~/.cursor/rules/agentic-harness.mdc` plus `~/.cursor/agents/`,
 `~/.gemini/GEMINI.md` plus `~/.gemini/config/skills/`, and
 `~/.claude/CLAUDE.md` plus `~/.claude/skills/`. All four adapters receive the
-five canonical native role projections. Codex maps Luna Medium -> Terra
-Medium-first -> Sol Low-first decision authority; Claude maps Haiku
+five canonical native role projections. Codex subagents default to GPT-6 Luna
+xHigh; escalation maps to Terra Medium-first -> Sol Low-first decision
+authority. Claude maps Haiku
 medium-equivalent -> Sonnet Medium-first -> Opus Low-first decision authority;
 Antigravity maps Flash Medium -> Flash High -> Pro High. Cursor recommends Auto
 for the root and uses inherited model and provider-managed reasoning for
