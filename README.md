@@ -2,14 +2,15 @@
 
 V4 is a parallel, minimal distribution. One native-agent kernel serves ordinary
 tasks and `/execute`; `/execute` is a constraints overlay, not a workflow
-engine. The host selects the root. Sol is decision-only, first escalation is
-Sol Low, and a failed worker receives one equivalent replacement with bounded
-context. Long deterministic operations use `bin/agentic-run.ps1` and keep
-runtime state outside repositories.
+engine. The host selects the root. Sol is decision-only, and first Codex
+escalation uses GPT-6.1 Sol at Medium. A failed worker receives one equivalent
+replacement with bounded context. Long deterministic operations use
+`bin/agentic-run.ps1` and keep runtime state outside repositories.
 
 Workers must return doubts, ambiguities, and critical decisions to the root;
-they may not assume consequential answers. The root answers or invokes Sol Low
-`architect_escalation`, then sends the decision back.
+they may not assume consequential answers. The root answers or invokes
+`architect_escalation` at the active adapter's configured model and effort,
+then sends the decision back.
 
 ## Contents
 
@@ -35,7 +36,7 @@ Global destinations are `~/.codex/AGENTS.md` plus `~/.codex/agents/`,
 `~/.gemini/GEMINI.md` plus `~/.gemini/config/skills/`, and
 `~/.claude/CLAUDE.md` plus `~/.claude/skills/`. All four adapters receive the
 five canonical native role projections. Codex subagents default to GPT-6 Luna
-xHigh; escalation maps to Terra Medium-first -> Sol Low-first decision
+xHigh; escalation maps to Terra Medium-first -> GPT-6.1 Sol Medium decision
 authority. Claude maps Haiku
 medium-equivalent -> Sonnet Medium-first -> Opus Low-first decision authority;
 Antigravity maps Flash Medium -> Flash High -> Pro High. Cursor recommends Auto

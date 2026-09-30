@@ -6,9 +6,9 @@ reasoning effort, uses fork_turns none by default, and stays within three
 concurrent workers.
 
 Luna/Terra handle bounded execution. Sol is architect_escalation only: first
-escalation is Sol Low and decision-only; Sol never edits, runs gates, waits, or
-owns mechanical correction. Workers use the five role files in global/agents/;
-project AGENTS.md takes precedence.
+escalation uses GPT-6.1 Sol at Medium and is decision-only; Sol never edits,
+runs gates, waits, or owns mechanical correction. Workers use the five role
+files in global/agents/; project AGENTS.md takes precedence.
 
 ### Resolved instruction references
 
@@ -50,9 +50,10 @@ rules, large logs, or test/debug cycles. The owner then loads the procedure:
 - **delegated:** send a self-contained packet; the worker owns skill loading
   and returns a bounded capsule/completion packet. The root does not load the
   body merely for awareness.
-- **decision-escalation:** Sol Low is decision-only for material architecture,
-  security, permissions, data, migration, contract, or contradictory-evidence
-  decisions; it never edits, tests, waits, or corrects mechanically.
+- **decision-escalation:** GPT-6.1 Sol at Medium is decision-only for material
+  architecture, security, permissions, data, migration, contract, or
+  contradictory-evidence decisions; it never edits, tests, waits, or corrects
+  mechanically.
 
 Before a broad read ask whether it primarily serves routing or execution. A
 primarily execution-oriented broad read belongs to the activity owner and is a

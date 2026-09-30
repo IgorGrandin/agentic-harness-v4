@@ -44,8 +44,9 @@ Context and output budgets are explicit and validated before dispatch.
 
 Every spawned worker returns doubts, ambiguities, and critical decisions to the
 root. Workers may not assume or resolve consequential ambiguity alone. The
-root answers, or invokes `architect_escalation` at Sol Low, then sends the
-recorded decision back before work continues.
+root answers, or invokes `architect_escalation` using the active adapter's
+configured model and effort, then sends the recorded decision back before work
+continues.
 
 ## Deterministic execution boundaries
 
