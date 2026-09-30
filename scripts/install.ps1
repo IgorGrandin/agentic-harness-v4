@@ -1,5 +1,5 @@
 [CmdletBinding(SupportsShouldProcess=$true)] param([string]$HarnessHome=(Join-Path ([Environment]::GetFolderPath('UserProfile')) '.agentic-harness'),[string]$CodexHome=(Join-Path ([Environment]::GetFolderPath('UserProfile')) '.codex'),[string]$AgentsHome=(Join-Path ([Environment]::GetFolderPath('UserProfile')) '.agents'),[string]$CursorHome=(Join-Path ([Environment]::GetFolderPath('UserProfile')) '.cursor'),[string]$GeminiHome=(Join-Path ([Environment]::GetFolderPath('UserProfile')) '.gemini'),[string]$ClaudeHome=(Join-Path ([Environment]::GetFolderPath('UserProfile')) '.claude'),[switch]$SkipConfig)
-Set-StrictMode -Version Latest; $ErrorActionPreference='Stop'; $root=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..')); $m=Get-Content -Raw (Join-Path $root 'portable-manifest.json')|ConvertFrom-Json
+Set-StrictMode -Version Latest; $ErrorActionPreference='Stop'; $root=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..')); $m=Get-Content -Raw -Encoding UTF8 (Join-Path $root 'portable-manifest.json')|ConvertFrom-Json
 . (Join-Path $PSScriptRoot 'adapter-tools.ps1')
 foreach($d in $m.harnessInstall.directories){$s=Join-Path $root $d;$t=Join-Path $HarnessHome $d;if(-not(Test-Path $s)){throw "Missing source: $d"};if($PSCmdlet.ShouldProcess($t,'Install V4 directory')){New-Item -ItemType Directory -Force (Split-Path $t)|Out-Null;Copy-Item $s $t -Recurse -Force}}
 foreach($f in $m.harnessInstall.files){$s=Join-Path $root $f;$t=Join-Path $HarnessHome $f;if($PSCmdlet.ShouldProcess($t,'Install V4 file')){New-Item -ItemType Directory -Force (Split-Path $t)|Out-Null;Copy-Item $s $t -Force}}
@@ -14,13 +14,13 @@ $claudeA=Get-AdapterManifest $root 'Claude';Install-ManagedContent (Get-AdapterI
 $claudeAgents=Join-Path $ClaudeHome 'agents'; foreach($role in $m.agentFiles){$raw=Get-RoleProjection $root $role Claude; $name=[regex]::Match($raw,'(?m)^name:\s*(\S+)').Groups[1].Value; Install-ManagedContent $raw (Join-Path $claudeAgents "$name.md") $ClaudeHome "agents\$name.md"}
 $geminiAgents=Join-Path $GeminiHome 'config\agents'; foreach($role in $m.agentFiles){$raw=Get-RoleProjection $root $role Antigravity; $name=[regex]::Match($raw,'(?m)^name:\s*(\S+)').Groups[1].Value; Install-ManagedContent $raw (Join-Path $geminiAgents "$name.md") $GeminiHome "config\agents\$name.md"}
 foreach($skill in $m.skills){Install-ManagedDirectory (Join-Path $root "skills\$skill") (Join-Path $AgentsHome "skills\$skill") $AgentsHome "skills\$skill";Install-ManagedDirectory (Join-Path $root "skills\$skill") (Join-Path $GeminiHome "config\skills\$skill") $GeminiHome "config\skills\$skill";Install-ManagedDirectory (Join-Path $root "skills\$skill") (Join-Path $ClaudeHome "skills\$skill") $ClaudeHome "skills\$skill"}
-Install-ManagedContent (Get-Content -Raw (Join-Path $root 'config\skill-index.md')) (Join-Path $AgentsHome 'skill-index.md') $AgentsHome 'skill-index.md'
-foreach($role in $m.agentFiles){$src=Join-Path $root "global\agents\$role";Install-ManagedContent (Get-Content -Raw $src) (Join-Path $CodexHome "agents\$role") $CodexHome "agents\$role"}
+Install-ManagedContent (Get-Content -Raw -Encoding UTF8 (Join-Path $root 'config\skill-index.md')) (Join-Path $AgentsHome 'skill-index.md') $AgentsHome 'skill-index.md'
+foreach($role in $m.agentFiles){$src=Join-Path $root "global\agents\$role";Install-ManagedContent (Get-Content -Raw -Encoding UTF8 $src) (Join-Path $CodexHome "agents\$role") $CodexHome "agents\$role"}
 if(-not $SkipConfig){
-    $configPath=Join-Path $CodexHome 'config.toml'; $fragment=Get-Content -Raw (Join-Path $root 'config\agents.toml')
+    $configPath=Join-Path $CodexHome 'config.toml'; $fragment=Get-Content -Raw -Encoding UTF8 (Join-Path $root 'config\agents.toml')
     if($PSCmdlet.ShouldProcess($configPath,'Merge managed [agents] configuration')){
         New-Item -ItemType Directory -Force (Split-Path $configPath)|Out-Null
-        if(Test-Path -LiteralPath $configPath -PathType Leaf){$backup=Join-Path $CodexHome (Join-Path 'portable-backups' (Get-Date -Format 'yyyyMMdd-HHmmss'));New-Item -ItemType Directory -Force $backup|Out-Null;Copy-Item $configPath (Join-Path $backup 'config.toml') -Force;$existing=Get-Content -Raw $configPath}else{$existing=''}
+        if(Test-Path -LiteralPath $configPath -PathType Leaf){$backup=Join-Path $CodexHome (Join-Path 'portable-backups' (Get-Date -Format 'yyyyMMdd-HHmmss'));New-Item -ItemType Directory -Force $backup|Out-Null;Copy-Item $configPath (Join-Path $backup 'config.toml') -Force;$existing=Get-Content -Raw -Encoding UTF8 $configPath}else{$existing=''}
         $without=[regex]::Replace($existing,'(?ms)^\[agents\]\s*.*?(?=^\[|\z)','')
         [IO.File]::WriteAllText($configPath,($without.TrimEnd()+"`n`n"+$fragment.Trim()+"`n"),[Text.UTF8Encoding]::new($false))
     }

@@ -23,7 +23,7 @@ function Get-AdapterManifest {
 
     $path = Resolve-RepositoryPath -RepositoryRoot $RepositoryRoot -RelativePath "adapters/$($Adapter.ToLowerInvariant())/adapter.json"
     if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { throw "Missing adapter manifest: $path" }
-    return Get-Content -Raw -LiteralPath $path | ConvertFrom-Json
+    return Get-Content -Raw -LiteralPath $path -Encoding UTF8 | ConvertFrom-Json
 }
 
 function Get-AdapterInstructionContent {
@@ -38,7 +38,7 @@ function Get-AdapterInstructionContent {
     $parts = foreach ($relative in $sources) {
         $path = Resolve-RepositoryPath -RepositoryRoot $RepositoryRoot -RelativePath $relative
         if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { throw "Missing instruction source: $relative" }
-        (Get-Content -Raw -LiteralPath $path).TrimEnd()
+        (Get-Content -Raw -LiteralPath $path -Encoding UTF8).TrimEnd()
     }
 
     return (($parts -join "`n`n") + "`n")
@@ -46,7 +46,7 @@ function Get-AdapterInstructionContent {
 
 function Get-RoleProjection {
     param([Parameter(Mandatory=$true)][string]$RepositoryRoot,[Parameter(Mandatory=$true)][string]$RoleFile,[Parameter(Mandatory=$true)][ValidateSet('Cursor','Claude','Antigravity')][string]$Provider)
-    $raw = Get-Content -Raw (Resolve-RepositoryPath $RepositoryRoot "global/agents/$RoleFile")
+    $raw = Get-Content -Raw -Encoding UTF8 (Resolve-RepositoryPath $RepositoryRoot "global/agents/$RoleFile")
     $name = [regex]::Match($raw,'(?m)^name\s*=\s*"([^"]+)"').Groups[1].Value
     $desc = [regex]::Match($raw,'(?m)^description\s*=\s*"([^"]+)"').Groups[1].Value
     $body = [regex]::Match($raw,'(?s)developer_instructions\s*=\s*"""\s*(.*?)\s*"""').Groups[1].Value.Trim()
