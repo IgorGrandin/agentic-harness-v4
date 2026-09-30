@@ -11,8 +11,12 @@
 - `READ`: inspect files, state, logs, metadata, or configuration without mutation.
 - `SAFE WRITE`: make scoped, reversible changes inside the authorized target after inspecting it.
 - `PRIVILEGED / DESTRUCTIVE`: delete, bulk move, change security or system configuration, cross a privilege boundary, or create consequential external effects. Require explicit authorization before acting.
-- When an authorized command is blocked solely by sandbox or host access restrictions, request the narrowest permission through the active runtime's approval mechanism. State a concrete purpose and the narrowest command and resource scope. Existing task authorization for scoped elevation is sufficient; do not ask the user again before submitting the routine request. Host approval is still required.
-- If permission is denied, continue independent work and report the exact blocked command and reason. Never bypass approval or change ACLs, credentials, or security controls to work around the denial.
-- Treat `command not found` (for example, Docker or `az` is absent) as a missing dependency, not a permission error. Use documented alternatives or report it; elevation does not install executables or start services.
+
+### Scoped command permissions
+
+When the host explicitly blocks a task-authorized command for sandbox or restricted-permission reasons, request scoped elevation through the host approval mechanism (`require_escalated` in Codex). Give a concrete purpose and the narrowest command and resource scope. Do not ask the user again for routine elevation already authorized by the task; keep host approval controls intact.
+
+If denied, continue independent work and report the blocked command and reason. Never bypass approval by changing ACLs, credentials, or security settings. Treat `command not found` (for example, Docker or `az` is absent) as a missing dependency, not a permission error. Find documented alternatives or report it; elevation does not install tools.
+
 - A diagnostic or review request authorizes inspection and reporting, not implementation.
 - Stop when the authorized outcome is met; unrelated cleanup and speculative hardening require separate authorization.
