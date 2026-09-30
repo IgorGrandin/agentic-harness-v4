@@ -36,8 +36,7 @@ the request. The host approval step still applies.
 
 If approval is denied, continue independent work and report the exact blocked
 command and reason. Never bypass approval, change ACLs or credentials, weaken
-security controls, or run as administrator by default. Treat `command not
-found` and missing or stopped services separately from access-denied failures;
+security controls, or run as administrator by default. Treat `command not found` and missing or stopped services separately from access-denied failures;
 elevation does not install executables or start services. Use a documented
 alternative or report the missing prerequisite.
 
