@@ -90,9 +90,9 @@ The installed portable interfaces are `~/.agentic-harness/bin/agentic-run.ps1` a
 - `READ`: inspect files, state, logs, metadata, or configuration without mutation.
 - `SAFE WRITE`: make scoped, reversible changes inside the authorized target after inspecting it.
 - `PRIVILEGED / DESTRUCTIVE`: delete, bulk move, change security or system configuration, cross a privilege boundary, or create consequential external effects. Require explicit authorization before acting.
-- When an authorized command is blocked solely by sandbox or host access restrictions, request the narrowest permission through the active runtime's approval mechanism. State the exact command, resource, and purpose. Existing task authorization for scoped elevation is sufficient; do not ask the user again before submitting the routine request. Host approval is still required.
+- When an authorized command is blocked solely by sandbox or host access restrictions, request the narrowest permission through the active runtime's approval mechanism. State a concrete purpose and the narrowest command and resource scope. Existing task authorization for scoped elevation is sufficient; do not ask the user again before submitting the routine request. Host approval is still required.
 - If permission is denied, continue independent work and report the exact blocked command and reason. Never bypass approval or change ACLs, credentials, or security controls to work around the denial.
-- Distinguish access-denied failures from missing executables or unavailable services. A permission request does not install a tool or start a missing service; use a documented alternative or report the prerequisite.
+- Treat `command not found` (for example, Docker or `az` is absent) as a missing dependency, not a permission error. Use documented alternatives or report it; elevation does not install executables or start services.
 - A diagnostic or review request authorizes inspection and reporting, not implementation.
 - Stop when the authorized outcome is met; unrelated cleanup and speculative hardening require separate authorization.
 

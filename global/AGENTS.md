@@ -1,5 +1,11 @@
 # Global operating agreements
 
+### Scoped command permissions
+
+When the host explicitly blocks a task-authorized command for sandbox or restricted-permission reasons, request scoped elevation through the host approval mechanism (`require_escalated` in Codex). Give a concrete purpose and the narrowest command and resource scope. Do not ask the user again for routine elevation already authorized by the task; keep host approval controls intact.
+
+If denied, continue independent work and report the blocked command and reason. Never bypass approval by changing ACLs, credentials, or security settings. Treat `command not found` (for example, Docker or `az` is absent) as a missing dependency, not a permission error. Find documented alternatives or report it; elevation does not install tools.
+
 ## Codex runtime adapter
 
 The host/user selects the root; the harness never replaces it. Codex
@@ -24,21 +30,6 @@ project AGENTS.md takes precedence.
   pass it directly and do not probe the repository for same-named copies.
 - Use project-local skills or overlays only when explicitly resolved as local,
   passing their exact path.
-
-### Scoped command permissions
-
-When a task-authorized command is blocked by sandbox or host access restrictions,
-request the narrowest available permission for that exact command through the
-host mechanism (`require_escalated` when available). Give a concrete purpose
-and minimum command, path, or resource scope. Existing task authorization for
-routine scoped elevation is enough; do not ask the user again before submitting
-the request. The host approval step still applies.
-
-If approval is denied, continue independent work and report the exact blocked
-command and reason. Never bypass approval, change ACLs or credentials, weaken
-security controls, or run as administrator by default. Treat `command not found` and missing or stopped services separately from access-denied failures;
-elevation does not install executables or start services. Use a documented
-alternative or report the missing prerequisite.
 
 The root is a control plane except for a true microtask. Delegated mechanical
 work remains delegated: if a worker fails, times out, reaches a usage limit, or
