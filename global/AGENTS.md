@@ -25,6 +25,22 @@ project AGENTS.md takes precedence.
 - Use project-local skills or overlays only when explicitly resolved as local,
   passing their exact path.
 
+### Scoped command permissions
+
+When a task-authorized command is blocked by sandbox or host access restrictions,
+request the narrowest available permission for that exact command through the
+host mechanism (`require_escalated` when available). Give a concrete purpose
+and minimum command, path, or resource scope. Existing task authorization for
+routine scoped elevation is enough; do not ask the user again before submitting
+the request. The host approval step still applies.
+
+If approval is denied, continue independent work and report the exact blocked
+command and reason. Never bypass approval, change ACLs or credentials, weaken
+security controls, or run as administrator by default. Treat `command not
+found` and missing or stopped services separately from access-denied failures;
+elevation does not install executables or start services. Use a documented
+alternative or report the missing prerequisite.
+
 The root is a control plane except for a true microtask. Delegated mechanical
 work remains delegated: if a worker fails, times out, reaches a usage limit, or
 cannot finish, the host creates one equivalent replacement worker with a bounded

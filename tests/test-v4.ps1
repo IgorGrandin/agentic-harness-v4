@@ -4,6 +4,9 @@ $root=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 & (Join-Path $root 'scripts/verify.ps1') | Out-Null
 function Require([bool]$Condition,[string]$Message){if(-not $Condition){throw $Message}}
 function ExpectFailure([scriptblock]$Action,[string]$Message){$failed=$false;try{& $Action}catch{$failed=$true};Require $failed $Message}
+$permissionPolicy=Get-Content -Raw (Join-Path $root 'core/policies/security-permissions.md'); foreach($needle in @('narrowest permission through the active runtime''s approval mechanism','do not ask the user again','If permission is denied','missing executables or unavailable services')){Require ($permissionPolicy.Contains($needle)) "Scoped permission policy missing: $needle"}
+$codexRuntime=Get-Content -Raw (Join-Path $root 'adapters/codex/runtime.md'); foreach($needle in @('require_escalated','minimum command, path, or resource scope','do not ask the user again','If approval is denied','command not found','elevation does not install executables')){Require ($codexRuntime.Contains($needle)) "Codex permission request policy missing: $needle"}
+$codexPolicy=Get-Content -Raw (Join-Path $root 'global/AGENTS.md'); Require ($codexPolicy.Contains('require_escalated') -and $codexPolicy.Contains('do not ask the user again')) 'Generated Codex global policy is missing scoped elevation guidance'
 $manifest=Get-Content -Raw (Join-Path $root 'portable-manifest.json')|ConvertFrom-Json
 Require (@($manifest.skills).Count -eq 4) 'Skill count mismatch'
 Require (@($manifest.agentFiles).Count -eq 5) 'Semantic role count changed'
