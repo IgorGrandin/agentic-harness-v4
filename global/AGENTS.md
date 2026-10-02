@@ -8,10 +8,24 @@ If denied, continue independent work and report the blocked command and reason. 
 
 ## Codex runtime adapter
 
-The host/user selects the root; the harness never replaces it. Codex
-subagents default to `gpt-6-luna` at xHigh. Every spawn specifies a model and
-reasoning effort, uses fork_turns none by default, and stays within three
-concurrent workers.
+The host/user selects the root; the harness never replaces it. Keep the
+orchestrator on GPT-6 Luna at Medium when the host allows explicit root
+selection. The harness cannot enforce a root model or effort through
+`config.toml`; an explicit host/user choice wins. Codex subagents default to
+`gpt-6-luna` at Medium. Role files set Scout to Low and Reviewer to High;
+Implementer, Verifier, and first-pass Architect use Medium. Every spawn
+specifies a model and reasoning effort, uses fork_turns none by default, and
+stays within three concurrent workers. No role uses xHigh in the normal path.
+
+The Planner is a responsibility of the orchestrator or assigned worker, not a
+separate native role. It should use scout findings instead of repeating broad
+repository exploration.
+
+Prefer action over narration. Once the task is understood, act without
+repeatedly describing the next steps. Use at most one short preamble before
+tool calls when useful; do not restate the plan unless it materially changes.
+Report meaningful findings, blockers, changes, and validation results without
+repeating information already provided by another agent.
 
 Luna/Terra handle bounded execution. Sol is architect_escalation only: first
 escalation uses GPT-6.1 Sol at Medium and is decision-only; Sol never edits,
@@ -62,6 +76,8 @@ rules, large logs, or test/debug cycles. The owner then loads the procedure:
   architecture, security, permissions, data, migration, contract, or
   contradictory-evidence decisions; it never edits, tests, waits, or corrects
   mechanically.
+- Use Sol High only after an evidence-backed insufficiency packet from Sol
+  Medium. xHigh is exceptional and requires a separate explicit justification.
 
 Before a broad read ask whether it primarily serves routing or execution. A
 primarily execution-oriented broad read belongs to the activity owner and is a
@@ -77,7 +93,8 @@ the writer.
 Long deterministic work uses the blocking agentic-run.ps1; do not poll from the
 root. The kernel is an optional helper for bounded delegation, replacement,
 context-budget validation, and constraint overlays. Ordinary tasks use the
-base harness. /execute adds declared constraints to that same root.
+base harness. `/execute` adds declared constraints to that same root and uses
+the same role routing; it does not add a separate model workflow.
 
 # Shared skill metadata index
 

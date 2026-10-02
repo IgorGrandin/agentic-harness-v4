@@ -36,8 +36,13 @@ Global destinations are `~/.codex/AGENTS.md` plus `~/.codex/agents/`,
 `~/.gemini/GEMINI.md` plus `~/.gemini/config/skills/`, and
 `~/.claude/CLAUDE.md` plus `~/.claude/skills/`. All four adapters receive the
 five canonical native role projections. Codex subagents default to GPT-6 Luna
-xHigh; escalation maps to Terra Medium-first -> GPT-6.1 Sol Medium decision
-authority. Claude maps Haiku
+Medium, with Scout Low, Reviewer High, and Implementer, Verifier,
+and Architect Medium; first escalation maps to GPT-6.1 Sol Medium decision
+authority, then Sol High only after an evidence-backed insufficiency packet.
+The Codex harness cannot enforce the root model or effort; the host/user
+selects it, with Luna Medium as the target when supported. Planner remains a
+responsibility within the existing orchestrator/worker roles. xHigh is
+exceptional and requires separate justification. Claude maps Haiku
 medium-equivalent -> Sonnet Medium-first -> Opus Low-first decision authority;
 Antigravity maps Flash Medium -> Flash High -> Pro High. Cursor recommends Auto
 for the root and uses inherited model and provider-managed reasoning for

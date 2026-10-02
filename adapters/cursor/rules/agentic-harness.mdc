@@ -125,6 +125,12 @@ full body. Applicable skill metadata is routing input, not ownership.
 
 ### Execution constraints
 
+- Prefer action over narration. Once the task is understood, inspect or act
+  without repeatedly describing the next steps.
+- Use at most one short preamble before tool calls when useful. Do not restate
+  the plan unless it materially changes.
+- Report meaningful findings, blockers, changes, and validation results;
+  avoid repeating information already provided by another agent.
 - For diagnosis or review, inspect and report; edit only when implementation is requested.
 - Prefer one writer. Parallel writers require isolated worktrees and non-overlapping ownership.
 - Choose subagent roles by activity and use delegation only when context isolation, independence, or parallelism has a material net benefit.
