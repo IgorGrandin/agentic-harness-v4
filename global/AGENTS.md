@@ -118,3 +118,12 @@ skill body after the ownership gate.
 - `revise-and-deploy` — audit a completed execution, validate its PR, and deploy to Dev2 only when explicitly requested.
 - `review-pr` — review a pull request against the actual diff, repository rules, ADRs, release scope, and gate evidence.
 - `domain-modeling` — sharpen domain terms and record architectural decisions using the repository's established glossary and ADR formats.
+- `audit-task` — audit a human developer's implementation against the canonical task spec and real diff; read-only review.
+- `brainstorming` — run a structured design interview using grilling and the existing domain-modeling skill.
+- `grilling` — interview the owner one decision at a time to stress-test a plan or design.
+- `handoff` — write a concise, resumable session handoff for a new Codex session.
+- `plan-for-cursor` — validate a Cursor plan for executable steps, discriminating tests, verified claims, and gates.
+- `plan-task` — read an Azure Boards work item and create a repository-grounded Cursor execution plan.
+- `revise` — audit a completed Cursor execution against its plan, code, and gates; produce a correction plan when needed.
+- `spec-task` — collaboratively define a human-developer task and prepare its Azure Boards specification.
+- `takeover` — resume from the latest or specified Codex handoff after checking current repository state.

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Plan Task"
+  short_description: "Imported Claude workflow with a Codex interface"
+  default_prompt: "Use $plan-task to run this workflow in Codex. Follow its preserved Claude source through the Codex interface."
+policy:
+  allow_implicit_invocation: false

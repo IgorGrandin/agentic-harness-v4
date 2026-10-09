@@ -1,0 +1,22 @@
+---
+name: plan-task
+description: "Lê um Work Item do Azure Boards pelo número (descrição, critérios de aceite, anexos, comentários e itens ligados), analisa o pedido contra a arquitetura vigente, resolve com o owner tudo que ficar abaixo de 95% de certeza e produz o plano do Cursor em `.cursor/plans/*.plan.md`, commitado na branch de trabalho. Use quando o owner pedir '/plan-task <nº>'."
+---
+
+# Plan Task (Codex interface)
+
+This entry preserves the original Claude workflow at [source-claude/SKILL.md](source-claude/SKILL.md). Read that file before executing the workflow. Treat it as the normative workflow; translate only the host-specific mechanics below. Do not edit the source file.
+
+## Codex interface
+
+- Invoke this entry explicitly as `$plan-task` (the Claude slash invocation becomes the Codex skill invocation). Keep the source workflow's scope, sequence, questions, decision points, outputs, and approval boundaries.
+- Use Codex file reading for Claude `Read`; `rg` for `Grep`/`Glob`; and the normal shell tool for `Bash`. Do not emulate Claude-specific tool syntax.
+- When the source delegates evidence gathering to `Agent` / `diff-evidence`, use the existing read-only Scout role for one bounded evidence question. Ask for file/line references and literal excerpts only; the skill owner retains analysis and verdict.
+- For Azure Boards, PRs, files, and pipelines, use the Azure DevOps connector/tools available in this session and follow their actual schemas. The imported skill's MCP function names are examples from Claude and are not Codex tool names. If the connector is unavailable, report that dependency rather than pretending to query Azure.
+- Resolve project paths from the active BrixBroker checkout and its `AGENTS.md` / repository guidance. Claude-specific `CLAUDE.md` and `.cursor` references are project evidence where present; Codex instructions do not replace them. Preserve Cursor-targeted outputs (such as `.cursor/plans`) when the source requires them.
+- Translate Claude-specific ephemeral state paths to `%TEMP%\codex-handoffs\BrixBroker\` for handoff documents and `%USERPROFILE%\.codex\brixbroker\` for durable Codex session records. Keep filenames and record formats required by the source. Never create or edit the original Claude-specific state locations from Codex.
+- Codex/session permissions govern tool use. Any write to Azure, PR comments, or governance records remains subject to the source workflow's owner-approval step; do not infer approval from invocation alone.
+
+## Invocation
+
+Use `$plan-task` when the user asks for this workflow, including the equivalent Claude slash-command name. If the source calls another imported skill, read that skill's Codex entry and preserve the dependency order; for existing `domain-modeling`, use its canonical shared skill as-is.
