@@ -15,6 +15,7 @@ $claudeAgents=Join-Path $ClaudeHome 'agents'; foreach($role in $m.agentFiles){$r
 $geminiAgents=Join-Path $GeminiHome 'config\agents'; foreach($role in $m.agentFiles){$raw=Get-RoleProjection $root $role Antigravity; $name=[regex]::Match($raw,'(?m)^name:\s*(\S+)').Groups[1].Value; Install-ManagedContent $raw (Join-Path $geminiAgents "$name.md") $GeminiHome "config\agents\$name.md"}
 foreach($skill in $m.skills){Install-ManagedDirectory (Join-Path $root "skills\$skill") (Join-Path $AgentsHome "skills\$skill") $AgentsHome "skills\$skill";Install-ManagedDirectory (Join-Path $root "skills\$skill") (Join-Path $GeminiHome "config\skills\$skill") $GeminiHome "config\skills\$skill";Install-ManagedDirectory (Join-Path $root "skills\$skill") (Join-Path $ClaudeHome "skills\$skill") $ClaudeHome "skills\$skill"}
 Install-ManagedContent (Get-Content -Raw -Encoding UTF8 (Join-Path $root 'config\skill-index.md')) (Join-Path $AgentsHome 'skill-index.md') $AgentsHome 'skill-index.md'
+$codexA=Get-AdapterManifest $root 'Codex';Install-ManagedContent (Get-AdapterInstructionContent $root $codexA) (Join-Path $CodexHome 'AGENTS.md') $CodexHome 'AGENTS.md'
 foreach($role in $m.agentFiles){$src=Join-Path $root "global\agents\$role";Install-ManagedContent (Get-Content -Raw -Encoding UTF8 $src) (Join-Path $CodexHome "agents\$role") $CodexHome "agents\$role"}
 if(-not $SkipConfig){
     $configPath=Join-Path $CodexHome 'config.toml'; $fragment=Get-Content -Raw -Encoding UTF8 (Join-Path $root 'config\agents.toml')
