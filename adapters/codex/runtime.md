@@ -87,3 +87,14 @@ root. The kernel is an optional helper for bounded delegation, replacement,
 context-budget validation, and constraint overlays. Ordinary tasks use the
 base harness. `/execute` adds declared constraints to that same root and uses
 the same role routing; it does not add a separate model workflow.
+
+### Skill responsibility mapping
+
+The harness keeps its five canonical roles. When `review-pr` delegates a large-diff evidence question to its `diff-evidence` responsibility, use the existing read-only Scout role in Codex. Give Scout one specific evidence question and the diff target; request file-and-line references with literal supporting excerpts. Scout reports evidence only: it must not summarize the whole PR, assess compliance, recommend a verdict, or make the review decision. The review owner verifies the cited evidence and retains the verdict. This mapping does not add a sixth role or alter the packaged skill source.
+
+### `review-pr` Codex crosswalk
+
+- Invoke the preserved skill with an explicit request such as `$review-pr N`; this is the Codex equivalent of `/review-pr N`.
+- Interpret Claude `Read` as native file reading and `Grep` as `rg` searches.
+- Interpret `Agent` with `subagent_type: "diff-evidence"` as a bounded task to the existing read-only Scout, following the evidence-only/no-verdict contract above.
+- The skill's `.claude/settings.json` restrictions do not enforce permissions in Codex. Follow Codex/session permission controls, and always honor the skill's rule against editing PR code.
