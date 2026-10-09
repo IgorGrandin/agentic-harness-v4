@@ -5,7 +5,7 @@ description: "Lê um Work Item do Azure Boards pelo número (descrição, crité
 
 # Plan Task (Codex interface)
 
-This entry preserves the original Claude workflow at [source-claude/SKILL.md](source-claude/SKILL.md). Read that file before executing the workflow. Treat it as the normative workflow; translate only the host-specific mechanics below. Do not edit the source file.
+This entry preserves the original Claude workflow at [source-claude/ORIGINAL.md](source-claude/ORIGINAL.md). Read that file before executing the workflow. Treat it as the normative workflow; translate only the host-specific mechanics below. Do not edit the source file.
 
 ## Codex interface
 
