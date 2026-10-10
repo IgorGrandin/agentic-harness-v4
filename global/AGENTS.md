@@ -124,6 +124,6 @@ skill body after the ownership gate.
 - `handoff` — write a concise, resumable session handoff for a new Codex session.
 - `plan-for-cursor` — validate a Cursor plan for executable steps, discriminating tests, verified claims, and gates.
 - `plan-task` — read an Azure Boards work item and create a repository-grounded Cursor execution plan.
-- `revise` — audit a completed Cursor execution against its plan, code, and gates; produce a correction plan when needed.
+- `revise` — audit a Cursor plan execution against real code and diff; use available gate evidence without requiring a separate narrative report.
 - `spec-task` — collaboratively define a human-developer task and prepare its Azure Boards specification.
 - `takeover` — resume from the latest or specified Codex handoff after checking current repository state.

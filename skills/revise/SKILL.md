@@ -1,6 +1,6 @@
 ---
 name: revise
-description: "Lê o relatório de execução mais recente (ou um indicado) gerado pelo /execute do Cursor, audita de verdade contra o código e os gates reais, aprova ou desenha um plano de correção para o Cursor rodar via /execute, e atualiza a documentação de governança quando aprovado. Use quando o usuário pedir '/revise' após um ciclo de /execute no Cursor."
+description: "Audita a execução de um plano do Cursor contra o diff e o código reais; usa relatórios do /execute como evidência complementar quando existirem, sem exigir um relatório narrativo separado. Use após o Cursor executar um plano, mesmo que só haja evidência de gates."
 ---
 
 # Revise (Codex interface)
@@ -10,6 +10,8 @@ This entry preserves the original Claude workflow at [source-claude/ORIGINAL.md]
 ## Codex interface
 
 - Invoke this entry explicitly as `$revise` (the Claude slash invocation becomes the Codex skill invocation). Keep the source workflow's scope, sequence, questions, decision points, outputs, and approval boundaries.
+- **Codex fallback when `/execute` has no narrative report:** this deliberately adapts the source's Claude-specific report-required path. The separate `execute-reports` document is optional. Cursor may provide a gate report without that narrative, so do not stop with `sem-relatorio` just because the narrative file is absent. Start the timestamp invariant first, then identify the approved `.cursor/plans` plan and execution target from the conversation/argument plus `git status`, `git log`, and the actual diff. If a matching plan and changed commit/diff are identifiable, continue the code-quality audit against that plan and the real code. Treat any `/execute` gate report as evidence about gates only; do not infer code quality or missing facts from it. If gate evidence is absent, record it as unverified and still deliver the code review. Reserve `sem-relatorio` for when no execution target or diff can be identified after checking the repository; ask for the missing plan/commit only then.
+- Preserve the source's round-record invariant: record the start timestamp before opening project files and append a `rodadas.csv` row before ending, including when the narrative report is absent. In Codex, use `%USERPROFILE%\.codex\brixbroker\rodadas.csv` as the durable record path.
 - Use Codex file reading for Claude `Read`; `rg` for `Grep`/`Glob`; and the normal shell tool for `Bash`. Do not emulate Claude-specific tool syntax.
 - When the source delegates evidence gathering to `Agent` / `diff-evidence`, use the existing read-only Scout role for one bounded evidence question. Ask for file/line references and literal excerpts only; the skill owner retains analysis and verdict.
 - For Azure Boards, PRs, files, and pipelines, use the Azure DevOps connector/tools available in this session and follow their actual schemas. The imported skill's MCP function names are examples from Claude and are not Codex tool names. If the connector is unavailable, report that dependency rather than pretending to query Azure.
